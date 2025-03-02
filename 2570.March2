@@ -37,3 +37,40 @@ nums1[i].length == nums2[j].length == 2
 1 <= idi, vali <= 1000
 Both arrays contain unique ids.
 Both arrays are in strictly ascending order by id.
+
+CODE:
+class Solution {
+    public int[][] mergeArrays(int[][] nums1, int[][] nums2) {
+        int[] count = new int[1001]; // Array to hold the frequency of numbers, assuming the range is 0-1000.
+
+        // Iterate over the first array of pairs and update the count for each number.
+        for (int[] pair : nums1) {
+            count[pair[0]] += pair[1];
+        }
+
+        // Iterate over the second array of pairs and similarly update the count.
+        for (int[] pair : nums2) {
+            count[pair[0]] += pair[1];
+        }
+
+        // Determine the size of the resulting merged array by counting non-zero frequencies.
+        int size = 0;
+        for (int freq : count) {
+            if (freq > 0) {
+                size++;
+            }
+        }
+
+        // Create the answer array based on the calculated size.
+        int[][] merged = new int[size][2];
+
+        // Populate the answer array with the numbers and their frequencies.
+        for (int i = 0, index = 0; i < count.length; ++i) {
+            if (count[i] > 0) {
+                merged[index++] = new int[] {i, count[i]};// Using 'index' to fill the 'merged' array.
+            }
+        }
+
+        return merged; // Return the merged array with numbers and corresponding frequencies.
+    }
+}
